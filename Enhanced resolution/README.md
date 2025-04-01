@@ -26,4 +26,21 @@ The original paper:**"SwinIR: Image Restoration Using Swin Transformer"** – [a
 
 Below are some visual comparisons of original vs. enhanced images using **SwinIR-Large**:
 
+![Image](https://github.com/user-attachments/assets/b7d8371f-069c-4ca5-8e2f-2df6efac8846)
 
+
+![Image](https://github.com/user-attachments/assets/888f1539-9d48-4ffd-b725-dcd051771092)
+
+
+![Image](https://github.com/user-attachments/assets/6978c0f6-4d1a-4d19-b98d-87af19bfe7fc)
+
+
+## 🛠️ Requirements
+This implementation runs in **Google Colab** and installs:
+- `timm`
+- `OpenCV`
+- Pre-trained SwinIR model weights
+
+  ## 🙌 Acknowledgments
+- [Jingyun Liang et al.](https://github.com/JingyunLiang/SwinIR) for the original SwinIR implementation.
+- The open-source community for the tools used in this notebook.
