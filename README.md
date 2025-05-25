@@ -23,6 +23,9 @@ Satellite-Ship-Detection/
 │ └── yolov8n_cls_update.ipynb # YOLOv8 classification (enhanced images)
 └── README.md # Project overview
 
+Copy
+Edit
+
 yaml
 Copy
 Edit
