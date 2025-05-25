@@ -10,19 +10,23 @@ This project explores the task of **ship classification in satellite images** by
 ---
 
 ## 📁 Project Structure
-
-📦 Satellite-Ship-Detection/
+Satellite-Ship-Detection/
 ├── EDA/
-│ └── EDA.ipynb # Visual analysis of class distribution, brightness, color, edges
+│ └── EDA.ipynb # Visual analysis of class distribution, brightness, edges
 ├── Enhanced resolution/
 │ └── Enhanced_Resolution.ipynb # Super Resolution using SwinIR (x4 GAN)
 ├── ResNet50/
 │ ├── ResNet50.ipynb # Train ResNet50 on original images
 │ └── SuperResu.ipynb # Train ResNet50 on enhanced images
 ├── YOLO8/
-│ ├── yolov8n_cls.ipynb # YOLOv8 for classification (original images)
-│ └── yolov8n_cls_update.ipynb # YOLOv8 for classification (enhanced images)
-└── README.md # Project overview and documentation
+│ ├── yolov8n_cls.ipynb # YOLOv8 classification (original images)
+│ └── yolov8n_cls_update.ipynb # YOLOv8 classification (enhanced images)
+└── README.md # Project overview
+
+yaml
+Copy
+Edit
+
 
 
 ---
