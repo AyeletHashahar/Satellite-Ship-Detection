@@ -19,93 +19,100 @@ This project focuses on **ship classification from satellite images** using deep
 
 ## 🧠 Project Overview
 
-### 🛰️ 1. Dataset
-We used the **Satellite Imagery of Ships** dataset, which contains high-resolution satellite images labeled as either:
+## 🛰️ Dataset
+
+The dataset contains high-resolution satellite images labeled into two classes:
 
 - `ship`
 - `no-ship`
 
-These images simulate real-world detection tasks in maritime surveillance and defense.
+These images simulate real-world maritime detection tasks.
 
 ---
 
-### 🔍 2. Super-Resolution using SwinIR
+## 🧪 Super-Resolution (SwinIR)
 
-We applied the **SwinIR-Large x4 GAN** model to upscale low-resolution satellite images before classification. This method improves image clarity and may enhance the model's ability to detect small or blurry ships.
+To improve image clarity, we applied the **SwinIR-Large x4 GAN** model to upscale low-resolution satellite images before classification.
 
-- Model used: [`003_realSR_BSRGAN_DFOWMFC_s64w8_SwinIR-L_x4_GAN.pth`](https://github.com/JingyunLiang/SwinIR/releases/download/v0.0/003_realSR_BSRGAN_DFOWMFC_s64w8_SwinIR-L_x4_GAN.pth)
-- Source: [SwinIR GitHub Repository](https://github.com/JingyunLiang/SwinIR)
+- Model: [`003_realSR_BSRGAN_DFOWMFC_s64w8_SwinIR-L_x4_GAN.pth`](https://github.com/JingyunLiang/SwinIR/releases/download/v0.0/003_realSR_BSRGAN_DFOWMFC_s64w8_SwinIR-L_x4_GAN.pth)
+- Source: [SwinIR GitHub](https://github.com/JingyunLiang/SwinIR)
 
 ---
 
-## 🖼️ 3. Classification Models
+## 🧠 Classification Models
 
 ### ✅ ResNet50
-
-- Implemented with transfer learning (from `torchvision.models`).
-- Trained separately on raw and enhanced images.
-- Results:
 
 | Model Variant               | Input Type         | Accuracy | Precision (ship) | Recall (ship) | F1-score (ship) |
 |----------------------------|--------------------|----------|------------------|---------------|-----------------|
 | ResNet50                   | Raw images         | **99.50%** | 1.00             | 0.98          | 0.99            |
 | ResNet50                   | Super-resolved     | **98.97%** | 0.98             | 0.98          | 0.98            |
 
-<details>
-<summary><strong>ResNet50 – Confusion Matrices</strong></summary>
-
-**Raw Images:**
-
+**Raw Images Confusion Matrix:**
 - No-ship: 292 correct, 0 false positives  
 - Ship: 106 correct, 2 false negatives
 
-**Super-Resolution Images:**
-
+**Super-Resolution Confusion Matrix:**
 - No-ship: 281 correct, 2 false positives  
 - Ship: 102 correct, 2 false negatives
 
-</details>
-
-📌 **Observation:** Although super-resolution enhances visual clarity, in our case, classification performed slightly better on raw images with ResNet50.
+📌 **Insight:** While super-resolution enhances clarity, the raw images gave slightly better results with ResNet50.
 
 ---
 
 ### ✅ YOLOv8n Classification
 
-- Model: `yolov8n-cls` from [Ultralytics](https://github.com/ultralytics/ultralytics)
-- Approach:
-  - Trained on raw images
-  - Trained on enhanced images
-  - Compared performance with frozen backbone layers
-- Final performance metrics are available in the YOLOv8 notebooks.
+We used Ultralytics' YOLOv8n model (`yolov8n-cls`) for lightweight image classification.
 
-📌 **Note:** YOLOv8n offers a lightweight and fast solution suitable for edge deployment scenarios.
+#### YOLOv8n on Raw Images
+
+| Metric      | Ship   | No-ship |
+|-------------|--------|---------|
+| Precision   | 1.00   | 0.93    |
+| Recall      | 0.97   | 1.00    |
+| F1-score    | 0.99   | 0.96    |
+
+- **Test Accuracy:** **98.00%**
+- **Confusion Matrix:**
+  - Ship: 100 correct, 0 false positives
+  - No-ship: 292 correct, 8 false negatives
+
+#### YOLOv8n with Frozen Weights
+
+We evaluated the effect of **freezing the early layers** of the model.
+
+| Mode              | Accuracy |
+|-------------------|----------|
+| Normal Training   | 97.25%   |
+| Frozen Weights    | 97.25%   |
+
+📌 **Insight:** Freezing early layers did **not reduce** performance, suggesting pretrained features are robust enough for this binary classification task.
 
 ---
 
-## 🧪 Tools & Environment
+## ⚙️ Tools Used
 
 - Python 3.10+
 - PyTorch
 - Ultralytics YOLOv8
-- OpenCV
-- SwinIR (Image Super-Resolution)
-- Google Colab / Jupyter Notebook
+- SwinIR (for super-resolution)
+- OpenCV, NumPy, scikit-learn
+- Google Colab for training and evaluation
 
 ---
 
 ## 📌 Conclusion
 
-This project shows that **super-resolution can enhance satellite image classification**, but it's not always guaranteed to improve model performance. In our experiments:
+This project demonstrates:
 
-- **ResNet50** achieved best accuracy on **raw images** (99.50%)
-- Super-resolution slightly decreased accuracy but maintained high precision and recall
-- **YOLOv8n** served as a fast and scalable classifier for real-time or embedded systems
+- ResNet50 achieved best performance on raw images (99.50% accuracy)
+- Super-resolution improved visual clarity but did not significantly boost performance
+- YOLOv8n performed robustly on raw images (98% accuracy)
+- Freezing weights in YOLOv8n had no negative impact on accuracy
 
-These insights are valuable for future satellite imagery analysis and real-world maritime detection pipelines.
+The results suggest that **lightweight models like YOLOv8n can match heavy models like ResNet50** in binary classification tasks involving satellite imagery.
 
 ---
-
 ## 👩‍💻 Authors
 
 - Tzuf Lahan   
